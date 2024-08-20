@@ -13,3 +13,4 @@
   ### 마스터 화이팅
 <img width="352" alt="화면 캡처 2024-08-20 164141" src="https://github.com/user-attachments/assets/0386c355-7036-4b9c-9c22-8a4eb81e6693">
 
+- 전승현과 딸 셋
