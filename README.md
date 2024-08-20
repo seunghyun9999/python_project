@@ -11,4 +11,5 @@
 + ex ) 둘 사이에 어떠한 사이가 있을 것으로 보인다.
 
   ### 마스터 화이팅
-<img width="179" alt="화면 캡처 2024-08-20 164141" src="https://github.com/user-attachments/assets/d43919d2-474e-4154-88bd-9d9e8dafeb2e">
+<img width="352" alt="화면 캡처 2024-08-20 164141" src="https://github.com/user-attachments/assets/0386c355-7036-4b9c-9c22-8a4eb81e6693">
+
