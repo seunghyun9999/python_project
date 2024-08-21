@@ -1,42 +1,26 @@
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-from sklearn.preprocessing import MinMaxScaler
 
-# 데이터 로딩
+# 데이터 로드
 data = pd.read_excel('./data/2.elevator_failure_prediction.xlsx')
 
-# 첫 번째 열 제외
-data_features = data.iloc[:, 1:]  # 첫 번째 열 제외
+# 1열(첫 번째 열) 제거
+data = data.iloc[:, 1:]
 
-# 데이터 타입 확인
-print(data_features.dtypes)
+# 온도, 진동, 센서1, 센서2, 센서5 중 하나라도 0인 경우 제거
+filtered_data = data[~((data['Temperature'] == 0) &
+                       (data['Vibrations'] == 0) &
+                       (data['Sensor1'] == 0) &
+                       (data['Sensor2'] == 0) &
+                       (data['Sensor5'] == 0) &
+                       (data['Status'] == 2))]
 
-# 날짜 데이터가 있는 경우, 이를 제외한 데이터만 추출
-data_numeric = data_features.select_dtypes(include=[float, int])  # 수치형 데이터만 선택
+# 가중치 정의: Status 값에 따라 가중치 부여
+weights = filtered_data['Status'].map({0: 1, 1: 2, 2: 3})
 
-# 마지막 열 (타겟 변수)
-target = data_features.iloc[:, -1]
+# 가중치를 반영한 개수 계산
+count_0 = (weights[filtered_data['Status'] == 0]).sum()
+count_2 = (weights[filtered_data['Status'] == 2]).sum()
 
-# 0인 값을 가진 행 제거 (마지막 열 포함)
-data_cleaned = data_numeric[(data_numeric != 0).all(axis=1)]
-
-# 데이터 스케일링
-scaler = MinMaxScaler()
-scaled_features = scaler.fit_transform(data_cleaned)
-scaled_data = pd.DataFrame(scaled_features, columns=data_numeric.columns)
-
-# 마지막 열 추가
-scaled_data[data_features.columns[-1]] = target[data_cleaned.index].values
-
-# 상관계수 행렬 계산 (스케일 조정된 데이터)
-correlation_matrix = scaled_data.corr()
-
-# 상관계수 행렬 출력
-print(correlation_matrix)
-
-# 상관관계 행렬 시각화
-plt.figure(figsize=(12, 10))
-sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', vmin=-1, vmax=1, fmt='.2f')
-plt.title('Correlation Matrix with Min-Max Scaled Data (Excluding First Column)')
-plt.show()
+# 결과 출력
+print(f"Status가 0인 데이터의 가중치 합계: {count_0}")
+print(f"Status가 2인 데이터의 가중치 합계: {count_2}")
