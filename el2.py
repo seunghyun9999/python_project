@@ -4,7 +4,7 @@ import pandas as pd
 import scipy
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_val_score
@@ -19,21 +19,19 @@ print(des)
 array = data_filled.values
 X = array[:, 1:12]
 Y = array[:, 12]
-
+Y = np.where(Y == 1, 2, Y).astype(int)
 # 학습 데이터와 테스트 데이터 분리
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
 
-# 데이터 스케일링
-scaler = MinMaxScaler(feature_range=(0, 1))
-X_train_scaled = scaler.fit_transform(X_train)
-X_test_scaled = scaler.transform(X_test)
-
 # 모델 학습
-model = LinearRegression()
-model.fit(X_train_scaled, Y_train)
+model = LogisticRegression()
+model.fit(X_train, Y_train)
+a = model.predict_proba(X_test)
+print(a)
+
 
 # 예측
-y_pred = model.predict(X_test_scaled)
+y_pred = model.predict(X_test)
 
 # 시각화
 plt.scatter(range(len(Y_test[:20])), Y_test[:20], color='red', label='True values')
