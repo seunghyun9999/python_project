@@ -40,7 +40,7 @@ model.fit(X_train_scaled, Y_train)
 y_pred2 = model.predict_proba(X_test_scaled)
 y_pred = model.predict(X_test_scaled)
 print("예측값", y_pred)
-print("예측값을 도출한 각각의 확율", y_pred2)
+print("예측값을 도출하게 된 각각의 확율", np.round(y_pred2, 5))
 
 # 정확도 계산
 accuracy = accuracy_score(Y_test, y_pred)
@@ -53,4 +53,4 @@ print("오차행렬: \n", conf_matrix)
 # K-Fold Cross Validation
 kfold = KFold(n_splits=5, random_state=42, shuffle=True)
 results = cross_val_score(model, X_train_scaled, Y_train, cv=kfold, scoring='accuracy')
-print(f"K-Fold 교차검증 정확도: {results.mean()} ± {results.std()}")
+print(f"K-Fold 교차검증 정확도: {results.mean():.4f} ± {results.std():.4f}")
