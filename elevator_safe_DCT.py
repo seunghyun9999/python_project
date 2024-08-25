@@ -46,4 +46,4 @@ print("오차행렬: \n", conf_matrix)
 # K-Fold Cross Validation
 kfold = KFold(n_splits=5, random_state=42, shuffle=True)
 results = cross_val_score(model, X_train, Y_train, cv=kfold, scoring='accuracy')
-print(f"K-Fold 교차검증 정확도: {results.mean()} ± {results.std()}")
+print(f"K-Fold 교차검증 정확도: {results.mean():.4f} ± {results.std():.4f}")
