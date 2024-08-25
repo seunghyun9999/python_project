@@ -40,7 +40,7 @@ model.fit(X_train_scaled, Y_train)
 y_pred2 = model.predict_proba(X_test_scaled)
 y_pred = model.predict(X_test_scaled)
 print("예측값", y_pred)
-print("예측값을 도출한 확율", y_pred2)
+print("예측값을 도출한 각각의 확율", y_pred2)
 
 # 정확도 계산
 accuracy = accuracy_score(Y_test, y_pred)
